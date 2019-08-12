@@ -12,12 +12,104 @@ figure {
     margin: 0;
 }
 
-p {
-    margin: 0.1rem;
-}
-
 main {
     text-align: center;
+}
+
+main section p {
+    margin: 0;
+    margin-bottom: 0px;
+}
+
+header nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 12vh;
+    margin: 0 0;
+    font-size: 1rem;
+    width: 100%;
+    padding: 1rem;
+    background-color: white;
+    box-sizing: border-box;
+}
+
+header nav menu {
+    margin: 0;
+}
+
+nav figure {
+    margin: 1rem;
+    display: flex;
+}
+
+nav figure img {
+    height: 5rem;
+}
+
+nav menu li i {
+    font-size: 2rem;
+    color: #011627;
+}
+
+menu ul {
+    list-style: none;
+}
+
+.header {
+    position: sticky;
+    background-color: white;
+    top: 0;
+    z-index: 2;
+}
+
+.options {
+    display: none;
+    width: 100%;
+    padding: 0.5rem;
+    left: 0;
+    position: absolute;
+}
+
+.options ul,
+.menu ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.menu-bars:hover .options {
+    color: #EC0843;
+    display: block;
+    height: fit-content;
+    padding: 0 2rem;
+    cursor: pointer;
+}
+
+.options-menu {
+    background-color: #EC0843;
+    width: 100%;
+    padding: 1rem;
+    font-family: 'Ropa Sans', sans-serif;
+}
+
+.options-menu li,
+.options-menu a {
+    font-size: 1.5rem;
+    color: white;
+    margin: 1rem 0rem 1rem 0rem;
+    list-style: none;
+    text-decoration: none;
+}
+
+.options-menu li:hover,
+.options-menu a:hover {
+    color: #011627;
+    cursor: pointer;
+}
+
+.menu-desktop {
+    display: none;
 }
 
 
@@ -28,7 +120,7 @@ main {
     color: #011627;
     position: relative;
     left: 6rem;
-    top: 2rem;
+    top: 1rem;
     cursor: pointer;
 }
 
@@ -51,10 +143,22 @@ main {
 
 .redes {
     display: flex;
+    justify-content: center;
 }
 
 .redes a img {
     height: 2rem;
+}
+
+.register-img {
+    display: flex;
+    align-items: center;
+}
+
+.register-img a img {
+    cursor: pointer;
+    height: 3rem;
+    margin: 0.2rem 1rem 0rem 1rem;
 }
 
 .input-login {
@@ -70,12 +174,6 @@ main {
     width: 17rem;
 }
 
-
-/* .input-login::placeholder {
-    color: white;
-    text-align: center;
-} */
-
 .buttons {
     background-color: #EC0843;
     padding: 0.5rem;
@@ -84,13 +182,113 @@ main {
     width: 11.5rem;
     color: white;
     position: relative;
-    bottom: -4rem;
-    font-size: 1.3rem;
+    bottom: -2rem;
+    font-size: 1.2rem;
+
+}
+
+main {
+    display: flex;
+    background-image: url("img/welovepetsC_2048x.jpg");
+    width: 100%;
+    height: 30%;
+    background-repeat:no-repeat;
+    background-position: bottom;      
 }
 
 .listo {
     bottom: 0;
 }
+
+.profile-photo {
+    font-family: 'Ropa sans';
+}
+
+.photo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Ropa sans';
+}
+.element-photo {
+    width: 11rem;
+    height: 10rem;
+}
+/* Formulario Mi info */
+
+
+.form-profile {
+    font-family: 'Ropa sans';
+    margin: 0
+}
+
+.input-profile{
+    border: 2px solid #EC0843;
+    width: 17rem;
+    border-radius: 10px;
+}
+.age{
+    display:flex;
+    justify-content: center;
+}
+.num-age{
+    border: 2px solid #EC0843;
+    width: 5rem;
+    border-radius: 10px;  
+    text-align: center;
+    margin: 0 1rem 0 1rem;
+}
+
+.input-age {
+    border: 2px solid #EC0843;
+    width: 8rem;
+    border-radius: 10px;  
+    text-align: center;
+}
+.description-fur {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.input-description {
+    border: 2px solid #EC0843;
+    height: 8rem;
+    width: 17rem;
+    border-radius: 10px;  
+    text-align: center;
+}
+
+.save{
+    display: flex;
+    justify-content: center;
+}    
+.button-agree {
+        background-color: #EC0843;
+        padding: 0.3rem;
+        border-radius: 10px;
+        border: none;
+        width: 11.5rem;
+        color: white;
+        position: relative;
+        /* bottom: -3rem; */
+        font-size: 1rem;
+        position: relative;
+    }
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
 
 
 /*ID*/
@@ -101,7 +299,7 @@ main {
 
 #slogan {
     font-family: 'Oswald', sans-serif;
-    margin: 0 1rem 1rem 1rem;
+    margin: 0 1rem 0 1rem;
 }
 
 #facebook,
@@ -117,6 +315,57 @@ main {
 
 #google {
     background-color: #D62D22;
+}
+
+#divider {
+    width: 100%;
+    margin: 0;
+}
+
+/*HOME*/
+.flex-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+/*IMÁGENES DE FILTRADO*/
+.veterinario, .memes, .pet-friendly, .tips, .perdidos{
+    height: 6vh;
+    border: 0.2rem;
+
+}
+.line-1, .line-2{
+    background-color: #EC0843;
+    height: 0.2vh;
+}
+.etiquetas-filtrado{
+    font-size: 15px;
+    margin: 0.19rem;
+}
+
+.flex-container a, p{
+    color: #011627;
+    
+}
+.flex-container a, p:hover{
+    color: #EC0843;
+    cursor: pointer;
+    text-decoration: none;
+}
+.memes:hover{
+    color: #EC0843;
+}
+/*CAJA DE PUBLICACIONES*/
+.publication-conteiner{
+    background-color: white;
+    height: 60vh;
+    width: 19.5rem;
+}
+.utilidades{
+    background-color: #EC0843;
+    height: 60vh;
+    width: 6rem;
 }
 
 @media only screen and (min-width: 768px) {
@@ -138,4 +387,47 @@ main {
     #logo-login {
         height: 12rem;
     }
+    .menu {
+        display: none;
+    }
+    nav {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        font-size: 1rem;
+    }
+    .menu-desktop {
+        display: flex;
+        flex-direction: row;
+    }
+    .menu-desktop li,
+    .menu-desktop a {
+        display: flex;
+        justify-content: space-between;
+        margin: auto 1rem;
+        text-decoration: none;
+        color: #011627;
+    }
+    .menu-desktop li:hover,
+    .menu-desktop a:hover {
+        color: #EC0843;
+        cursor: pointer;
+    }
+    .veterinario, .memes, .pet-friendly, .tips, .perdidos{
+        height: 9vh;
+        margin: 2rem;
+    
+    }
+    /*CAJA DE PUBLICACIONES*/
+.publication-conteiner{
+    background-color: white;
+    height: 60vh;
+    width: 60rem;
+}
+.utilidades{
+    background-color: #EC0843;
+    height: 80vh;
+    width: 18rem;
+}
+    
 }
