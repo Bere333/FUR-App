@@ -251,16 +251,17 @@ const home = {
        //Funcionalidad de likes
       
        
-       const buttonLike = document.getElementById('smile');
-       if (buttonLike){
+       const buttonLike = document.querySelectorAll('.smile');
+       const arrButtonLike = Array.from(buttonLike);
+       
         
           console.log('Canito');
           
  
-          buttonLike.addEventListener('click', () => {
+          arrButtonLike.addEventListener('click', () => {
             console.log("¡Funciona boton de likes!");
             
-            const likesRef = db.collection('posts').doc('i1dG4aXhDHJChlNSW6YA');
+            const likesRef = db.collection('posts').doc('gIbaeKisLyQr5ZuqkUIb');
      
             
             
@@ -270,7 +271,7 @@ const home = {
           })
        }, true);
         
-      }
+      
 
        
          
