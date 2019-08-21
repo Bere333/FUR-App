@@ -98,14 +98,7 @@ const profile = {
         })
       }
        
-       postsButton.addEventListener('click', ()=> {
-           console.log('me estoy ejecutando');
-           const postInput = document.querySelector('#publicacion').value;
-        //Guarda filtro seleccionado
-        const postFilter =(selectFilter.options[selectFilter.selectedIndex].value);
-           savingPostData(postInput, postFilter)
-       })
-
+       
 
        const gettingPetInfo = () => {
             firestore.collection('pets').where("userID", "==", user.uid)
@@ -123,8 +116,12 @@ const profile = {
 
         gettingPetInfo();
 
+        const getUserPost = () => {
+          let collection = db.collection("posts");
+        let collectionRef = collection.doc();
         
-        db.collection("posts").where("userID", "==", user.uid).orderBy('date','desc')
+       
+       collection.where("userID", "==", user.uid).orderBy('date','desc')
       .get()
       .then((querySnapshot) => {
         const root = document.querySelector("#root");
@@ -133,6 +130,7 @@ const profile = {
         let strProfile = ' ';
          
         querySnapshot.forEach((doc) => {
+            let id = doc.id;
           let theme = doc.data().filter;
           if(theme == undefined){
             
@@ -151,23 +149,83 @@ const profile = {
                 </div>
               </div>
                 <div class="post-info-container">
+                    
                     <div class="post-content-theme-title">
-                        <p class="th" id="tema">Tema: ${theme} </p><span>${doc.data().date}</span>
+                        <p class="th" id="tema">Tema: ${theme} </p><span>${doc.data().date}</span><i class="far fa-trash-alt eraseIcon" data-toggle="modal" data-target="#exampleModalCenter" id="${id}"></i>
                     </div>
                     <p class="think th"> ${doc.data().post}</p>
                 </div>
               </div>
+
+               <!-- Modal -->
+                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalCenterTitle">¿Estas segur@ de borrar este post?</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                            <p>Si estas segur@, por favor confirma dando click en borrar</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="buttons btn btn-danger erasePost" data-dismiss="modal" aria-label="Close" >Borrar</button>                                
+                            </div>
+                            </div>
+                        </div>
+                        </div>  
               `;
               strProfile = `
               <div>
                   <img src="${user.photoURL}" alt="Foto de perfil" class="photo-profile">
             </div>
+
+                           
+
             `;
 
         });
         
         root.innerHTML = str;
-      });
+        let postToBeErased = null;
+        console.log(postToBeErased)
+        
+        const trashes = document.querySelectorAll('.eraseIcon');
+        const eraseButton = document.querySelectorAll('.erasePost');
+        const arrEraseButton = Array.from(eraseButton);
+        const arrTrashes = Array.from(trashes);
+
+        arrTrashes.forEach( trashIcon => {
+            trashIcon.addEventListener('click', (e)=>{
+                postToBeErased = e.target.id
+                 console.log(postToBeErased)
+                })
+        })
+
+        arrEraseButton.forEach( eraseButtonModal => {
+            eraseButtonModal.addEventListener('click', (e) => {
+                window.eraseDocumentFirebase('posts', postToBeErased);
+                getUserPost();
+            })
+        })
+
+        
+      }); 
+       } 
+
+        getUserPost();        
+
+postsButton.addEventListener('click', ()=> {
+           console.log('me estoy ejecutando');
+           const postInput = document.querySelector('#publicacion').value;
+        //Guarda filtro seleccionado
+        const postFilter =(selectFilter.options[selectFilter.selectedIndex].value);
+           savingPostData(postInput, postFilter)
+            getUserPost(); 
+       })
+
 
         }
 
@@ -178,8 +236,7 @@ const userInfo = {
         <figure>
             <img src="*photoURL*" alt="foto de perfil">
         </figure>
-        <h3>*userName*</h3>
-    `
+        <h3>*userName*</h3>`
 }
 
 export {userInfo}

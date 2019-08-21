@@ -202,10 +202,10 @@ const petCard = {
     <img src="*img*" class="img-myinfo" id="img-myinfo">
   </div>
   <div class="txt-myinfo"> 
-    <p>Apodos: <span>*nickName*</span></p>
-    <p>Especie: <span>*specie*</span></p>
-    <p>Edad: <span>*age*</span> <span>*age2*</span></p>
-    <p>Acerca de: <span>*about*</span></p>
+    <p>Apodos:  <span>*nickName*</span></p>
+    <p>Especie:  <span>*specie*</span></p>
+    <p>Edad:  <span>*age*</span> <span>*age2*</span></p>
+    <p>Acerca de:  <span>*about*</span></p>
   </div>
 </div>
 `

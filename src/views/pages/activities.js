@@ -79,7 +79,7 @@ const activities = {
         const timeInput = document.getElementById('hour');
         const descriptionInput = document.getElementById('description');
         const priorityInput = document.getElementById('priority')
-        const cardsSpace = document.getElementById('cards-act-container');
+        let cardsSpace = document.getElementById('cards-act-container');
 
         const saveButtonActivitie = document.getElementById('save-act');
 
@@ -107,10 +107,10 @@ const activities = {
                     console.log('Document written with ID: ', docRef.id);
                     console.log('Guardando actividad')
                 })
-                .then(() => {
-                    const newActCard = window.createActivityCard(title, date, time, description, priority);
-                    cardsSpace.innerHTML += newActCard;
-                })
+                // .then(() => {
+                //     const newActCard = window.createActivityCard(title, date, time, description, priority);
+                //     cardsSpace.innerHTML += newActCard;
+                // })
                 .catch((error) => {
                     console.error('Error adding document: ', error);
                     console.error('No se guarda nada')
@@ -118,13 +118,37 @@ const activities = {
         }
 
         const gettingCardFromFirebase = () => {
+            cardsSpace.innerHTML = '';
             db.collection('activities').where("userID", "==", user.uid).orderBy("date")
                 .get()
-                .then((snapshot) => {
-                    snapshot.forEach(element => {
+                .then((querysnapshot) => {
+                    querysnapshot.forEach(element => {
                         const { title, date, time, description, priority } = element.data();
-                        const newCards = window.createActivityCard(title, date, time, description, priority)
+                        let id = element.id;
+                        console.log(id)
+                        const newCards = window.createActivityCard(title, date, time, description, priority, id)
                         cardsSpace.innerHTML += newCards;
+
+                        let activitieToBeErased = null;
+                        const trashesAct = document.querySelectorAll('.eraseIcon');
+                        const eraseButtonAct = document.querySelectorAll('.eraseActButton');
+                        const arrTrashesAct = Array.from(trashesAct);
+                        const arrEraseButtonAct = Array.from(eraseButtonAct);
+
+                        arrTrashesAct.forEach(trashIcon => {
+                            trashIcon.addEventListener('click', (e)=>{
+                                activitieToBeErased = e.target.id;
+                                console.log(activitieToBeErased);
+                            })
+                        })
+
+                        arrEraseButtonAct.forEach(eraseButtonModal => {
+                            eraseButtonModal.addEventListener('click', (e) =>{
+                                window.eraseDocumentFirebase('activities', activitieToBeErased);
+                                cardsSpace.innerHTML ='';
+                                gettingCardFromFirebase();
+                            })
+                        })
                     });
                 })
         }
@@ -142,6 +166,7 @@ const activities = {
 
             savingActivitie(title, date, time, description, priority);
             eraseInputs(titleInput, dateInput, timeInput, descriptionInput, priorityInput);
+            gettingCardFromFirebase();
         })
 
 
@@ -152,7 +177,7 @@ const activities = {
 const components = {
     card: `<div class="card-act">
                 <div class="title-card-act *priority*">
-                    <h5>*title*</h5><i class="far fa-trash-alt" data-toggle="modal" data-target="#exampleModalCenter"></i>
+                    <h5>*title*</h5><i class="far fa-trash-alt eraseIcon" data-toggle="modal" data-target="#exampleModalCenter" id="*id*"></i>
                 </div>    
                     <span>Fecha: <span>*date*</span></span>
                     <span>Hora: <span>*time*</span></span>
@@ -173,7 +198,7 @@ const components = {
                             <p>Si estas segur@, por favor confirma dando click en borrar</p>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="buttons btn btn-danger" data-dismiss="modal" aria-label="Close">Borrar</button>                                
+                                <button type="button" class="buttons btn btn-danger eraseActButton" data-dismiss="modal" aria-label="Close">Borrar</button>                                
                             </div>
                             </div>
                         </div>

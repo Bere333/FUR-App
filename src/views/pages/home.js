@@ -85,7 +85,7 @@ const home = {
       const postsButton = document.querySelector('#btn-post');
       const selectFilter = document.querySelector('.select-filter');
       const user = await firebase.auth().currentUser;
-      console.log(user)
+      
       //Guardar data de los post
       const savingPostData = (postInput, postFilter) => {
         const user = firebase.auth().currentUser;
@@ -118,47 +118,81 @@ const home = {
           //Método para obtener la data de los post
           db.collection("posts").orderBy('date','desc')
           .get()
-          .then((querySnapshot) => {
+          .then((onSnapshot) => {
             const user = firebase.auth().currentUser;
             const root = document.querySelector("#root");
             const rootProfile = document.querySelector("#root-1");
             let str = ' ';
             let strProfile = ' ';
             
-            querySnapshot.forEach((doc) => {
+            onSnapshot.forEach((doc) => {
+              let idPost = doc.id;
               let theme = doc.data().filter;
+              
+              
+              
               if(theme == undefined){
                 
-              theme = 'General';
-            } 
-                str += `
-                <div class="post-print conteiner-post-home">
+                theme = 'General';
+              } 
+              str += `
+              <div class="post-print conteiner-post-home">
                   <div class="profile-reactions">
-                        <img src="${doc.data().photo}" alt="Foto de perfil" class="photo-profile">
+                  <img src="${doc.data().photo}" alt="Foto de perfil" class="photo-profile">
                         <p class="think t">${doc.data().name}</p>
-                    <div class="reactions">
-                        <i class="fas fa-smile-beam" id="smile"></i><p class="likes">${doc.data().likes}</p>
+                        <div class="reactions">
+                        <i class="fas fa-smile-beam smile" id="${idPost}"></i>
+                        <div class="rootlikes"><p class="likes">${doc.data().likes}<p></div>
                         <i class="fas fa-angry" id="angry"></i>
                         <i class="fas fa-comment" id="comment"></i>
                         <i class="fas fa-share-alt-square" id="share"></i>
                     </div>
                   </div>
-                    <div class="post-info-container">
-                        <div class="post-content-theme-title">
-                            <p class="th" id="tema">Tema: ${theme} </p><span>${doc.data().date}</span>
-                        </div>
-                        <p class="think th"> ${doc.data().post}</p>
-                    </div>
+                  <div class="post-info-container">
+                  <div class="post-content-theme-title">
+                  <p class="th" id="tema">Tema: ${theme} </p><span>${doc.data().date}</span>
+                  </div>
+                  <p class="think th"> ${doc.data().post}</p>
+                  </div>
                   </div>
                   `;
                   strProfile = `
                   <div>
-                      <img src="${user.photoURL}" alt="Foto de perfil" class="photo-profile">
-                </div>
-                `;
+                  <img src="${user.photoURL}" alt="Foto de perfil" class="photo-profile">
+                  </div>
+                  `;
+                  
+                  rootProfile.innerHTML = strProfile;
+                  root.innerHTML = str;
+                  
+                  
+                  
+                  //Funcionalidad de likes
+                  
                 
-              rootProfile.innerHTML = strProfile;
-              root.innerHTML = str;
+                  let likeToAdd = null;
+                              
+                  const buttonLike = document.querySelectorAll('.smile');
+                  const arrButtonLike = Array.from(buttonLike);
+                  arrButtonLike.forEach( likeButton => {
+                    likeButton.addEventListener('click', (e)=> {
+                      console.log("Canito");
+                      
+                          likeToAdd = e.target.id;
+                          const likesRef = db.collection('posts').doc(likeToAdd);
+                          likesRef.update({likes: firebase.firestore.FieldValue.increment(1)})
+                          const rootLikes = document.querySelector('.rootlikes');
+                          let strLikes = `<p class="likes">${doc.data().likes}</p>`;
+
+                          likesRef.onSnapshot((likeToAdd) => {
+                            console.log("Current data: ", likeToAdd.data().likes);
+                            strLikes = `<p class="likes">${likeToAdd.data().likes}</p>`;
+                            rootLikes.innerHTML = strLikes;
+                            
+                           });
+                    })
+                  })
+                  
             });
         });
         }
@@ -174,7 +208,8 @@ const home = {
         const postFilter =(selectFilter.options[selectFilter.selectedIndex].value);
         savingPostData(postInput, postFilter);
         
-        savingPostData(postInput, postFilter, likes);
+        savingPostData(postInput, postFilter);
+        gettingAllPost()
       })
 
       //Llamando las clases de las cajitas de cada filtro
@@ -182,7 +217,6 @@ const home = {
       const postsRef = db.collection('posts');
       const filterTips = document.querySelector('.tips');
       const filterMemes = document.querySelector('.memes');
-      console.log(filterMemes)
       const filterVeterinario = document.querySelector('.veterinario');
       const filterPetfriendly = document.querySelector('.pet-friendly');
       const filterPerdidos = document.querySelector('.perdidos');
@@ -191,15 +225,16 @@ const home = {
       //Obtener las tarjetas por cada filtro
       const filterPost = (fil) => {postsRef.where('filter', '==', fil )
       .get()
-      .then((querySnapshot) => {
+      .then((onSnapshot) => {
         const root = document.querySelector("#root");
         const user = firebase.auth().currentUser;
         const rootProfile = document.querySelector("#root-1");
         let str = ' ';
         let strProfile = ' ';
 
-      querySnapshot.forEach((doc) => {
+      onSnapshot.forEach((doc) => {
         let theme = doc.data().filter;
+        let idPost = doc.id;
         if(theme == undefined){
           
         theme = 'General';
@@ -210,7 +245,8 @@ const home = {
                     <img src="${doc.data().photo}" alt="Foto de perfil" class="photo-profile">
                     <p class="think t">${doc.data().name}</p>
                 <div class="reactions">
-                    <i class="fas fa-smile-beam" id="smile"></i><p class="likes">${doc.data().likes}</p>
+                    <i class="fas fa-smile-beam smile" id="${idPost}" ></i>
+                    <p class="likes">${doc.data().likes}</p>
                     <i class="fas fa-angry"></i>
                     <i class="fas fa-comment"></i>
                     <i class="fas fa-share-alt-square"></i>
@@ -230,64 +266,25 @@ const home = {
             </div>
             `;
       
-        })
         root.innerHTML = str;
+      })
       
-       })
-      
-  }
-       
-
-       //Funcionalidad de filtros
-       filterMemes.addEventListener('click', () => {
-         filterPost('Meme')
-         console.log('Hola se ejecuta filtrado de memes')
-         });
-       filterTips.addEventListener('click', () => filterPost('Tips'));
-       filterVeterinario.addEventListener('click', () => {filterPost('Veterinario')}, true);
-       filterPetfriendly.addEventListener('click', () => {filterPost('PetFriendly')}, true);
-       filterPerdidos.addEventListener('click', () => {filterPost('Perdidos')}, true); 
-
-       //Funcionalidad de likes
-      
-       
-       const buttonLike = document.querySelectorAll('.smile');
-       const arrButtonLike = Array.from(buttonLike);
-       
-        
-          console.log('Canito');
-          
- 
-          arrButtonLike.addEventListener('click', () => {
-            console.log("¡Funciona boton de likes!");
-            
-            const likesRef = db.collection('posts').doc('gIbaeKisLyQr5ZuqkUIb');
      
-            
-            
-           
-          likesRef.update({
-             likes: firebase.firestore.FieldValue.increment(1)
-          })
-       }, true);
-        
-      
 
-       
-         
-      
-       
+     
+    })
     
-     
-
-      
-       
-      
-    }
+  }
+  //Funcionalidad de filtros
+  filterMemes.addEventListener('click', () => {filterPost('Meme')});
+  filterTips.addEventListener('click', () => filterPost('Tips'));
+  filterVeterinario.addEventListener('click', () => {filterPost('Veterinario')}, true);
+  filterPetfriendly.addEventListener('click', () => {filterPost('PetFriendly')}, true);
+  filterPerdidos.addEventListener('click', () => {filterPost('Perdidos')}, true); 
 
   }  
        
         
     
-
+}
 export default home;

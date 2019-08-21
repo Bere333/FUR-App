@@ -322,6 +322,8 @@ footer {
    border-radius: 10px; 
    margin: 1rem; 
    border: 2px dashed #41EAD4;
+   box-shadow: 0 6px 10px -5px rgba(0, 0, 0, 0.8);
+
 }
 
 .img-myinfo-content,
@@ -358,6 +360,7 @@ footer {
     font-size: 14px;
     font-weight: bold;  
     color: #011627;
+    padding: 7px;
 }
  
 .txt-myinfo span{
@@ -366,7 +369,7 @@ footer {
 } 
 /* Imagen de la mascota */
 .img-myinfo {
-    width: 6rem;
+    width: 5rem;
     height: 5rem;
     margin: 1rem 0 0 0;
     border-radius: 10px;
@@ -393,7 +396,10 @@ footer {
     width: 100%;
     justify-content: center;
     align-items: center;
-    padding: 0.5rem;
+    padding: 0.5rem;   
+}
+.card-act {
+    box-shadow: 0 6px 10px -5px rgba(0, 0, 0, 0.8);
 }
 
 
@@ -509,6 +515,7 @@ footer {
     display: flex;
     flex-direction: column;
     align-items: center;
+    
 }
 
 
@@ -636,6 +643,7 @@ footer {
     border: 2px solid #EC0843;
     justify-content: center;
     margin: 0.5rem auto;
+    box-shadow: 0 6px 10px -5px rgba(0, 0, 0, 0.8);
 }
 
 .crea-post { /*NO BORRAR*/
@@ -733,6 +741,7 @@ footer {
     display: flex;
     justify-items: center;
     margin: 0.5rem;
+    box-shadow: 0 6px 10px -5px rgba(0, 0, 0, 0.8);
     
 }
 .photo-profile{ /*NO BORRAR*/
@@ -771,6 +780,7 @@ footer {
     width:70%;
     flex-direction: column;
     padding: 1rem;
+    
 }
 
 .reactions{
@@ -870,6 +880,7 @@ footer {
         height: 6vh;
         background-color: #EC0843;
         justify-content: left;
+        
     }
     .c-post { /*NO BORRAR*/
         font-family: 'Oswald', sans-serif;
@@ -879,7 +890,7 @@ footer {
     }
     .think{ /*NO BORRAR*/
         font-family: 'Oswald', sans-serif;
-        font-size: 1.5rem;
+        font-size: 1.3rem;
         padding: 1rem;
         display: flex;
         justify-content: center;
@@ -900,10 +911,10 @@ footer {
         
     /* MI INFO */
     .mi-info {
-        background-image: url("img/Cómo-Saber-si-un-Periquito-está-Enfermo-300x235.jpg");
+        background-image: url("img/peri.jpg");
         background-repeat: no-repeat;
         background-size: auto;
-        background-position: left;  
+        background-position: bottom;  
     }
     .cards-fur-container{
         flex-direction: row-reverse;
@@ -913,22 +924,32 @@ footer {
     .txt-myinfo{
         width: 60%;
     } 
+
+    .txt-myinfo p{
+        padding: 9px;
+    }
     
     .img-myinfo {
         width: 7rem;
         height: 5rem;
     margin: 2rem 0 0 0;
+    
 }   
     /* MI INFO */
     .card-myinfo {
         display: flex;
         justify-content: space-between;
-        width: 35%;
+        width: 30%;
         height: 13rem;
         padding: 0.3rem;
         border-radius: 10px;
          justify-content: center;
+         box-shadow: 0 6px 10px -5px rgba(0, 0, 0, 0.8);
+         transition: all 0.3s cubic-bezier(.25,.8,.25,1);     
     }
+
+
+
     .img-myinfo {
         width: 7rem;
         height: 5rem;
@@ -982,6 +1003,7 @@ footer {
         height: 24vh;
         background-color: white;
         border: 2px solid #EC0843;
+        box-shadow: 0 6px 10px -5px rgba(0, 0, 0, 0.8);
         
         
         
@@ -990,6 +1012,7 @@ footer {
         display: flex;
         justify-items: center;
         margin: 0.5rem;
+        box-shadow: 0 6px 10px -5px rgba(0, 0, 0, 0.8);
     }
     /*Caja que contiene todos los posts NO BORRAR*/
     .conteiner-all-posts { /*NO BORRAR*/

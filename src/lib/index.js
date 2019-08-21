@@ -201,13 +201,14 @@ const savingUserData = () => {
 
 //Activities function
 
-const createActivityCard = (title, date, time, description, priority) => {
+const createActivityCard = (title, date, time, description, priority, id) => {
     const newCard = components.card
         .replace('*title*', title)
         .replace('*date*', date)
         .replace('*time*', time)
         .replace('*description*', description)
-        .replace("*priority*", priority)
+        .replace('*priority*', priority)
+        .replace('*id*', id)
     return newCard;
 }
 
@@ -234,7 +235,7 @@ const createProfileInformation = (userName, photoURL) => {
 }
 
 const eraseDocumentFirebase = (collection, id)=> {
-    db.collection('collection').doc(id).delete()
+    db.collection(collection).doc(id).delete()
     .then(() =>console.log("Document successfully deleted!"))
     .catch((error) => console.error("Error removing document: ", error));
 }
@@ -249,3 +250,4 @@ window.createActivityCard = createActivityCard;
 window.createFurCard = createFurCard;
 window.goingLogin = goingLogin;
 window.createProfileInformation = createProfileInformation;
+window.eraseDocumentFirebase = eraseDocumentFirebase;
